@@ -1,32 +1,51 @@
 import cytoscape from "cytoscape";
-import { useEffect, useRef } from "react";
-import styled from "@emotion/styled";
+import CytoscapeComponent from "react-cytoscapejs";
 
-import style from "@/utils/cy-style.json";
 import data from "@/utils/data.json";
+import style from "@/utils/cy-style.json";
+import {
+  defaultZoomLavelState,
+  currentZoomLavelState,
+} from "@/utils/recoil";
+import {
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
+import { useState } from "react";
 
 export interface CytoscapeProps {}
 
 function Cytoscape({}: CytoscapeProps) {
-  const cyRef = useRef<cytoscape.Core & void>();
+  const [isInit, setIsInit] = useState<boolean>(false);
+  const setDefaultZoomLevel = useSetRecoilState(
+    defaultZoomLavelState
+  );
+  const [currentZoomLevel, setCurrentZoomLevel] =
+    useRecoilState(currentZoomLavelState);
 
-  useEffect(() => {
-    const cy = cytoscape({
-      container: document.getElementById("cy"),
-      style,
-      elements: data,
-    });
+  const handleCyInit = (cy: cytoscape.Core) => {
+    cy.center();
 
-    cyRef.current = cy;
-  }, []);
+    if (isInit) return;
 
-  return <Container id="cy" />;
+    cy.fit(undefined, 20);
+    setDefaultZoomLevel(cy.zoom());
+    setCurrentZoomLevel(cy.zoom());
+
+    setIsInit(true);
+  };
+
+  return (
+    <CytoscapeComponent
+      cy={handleCyInit}
+      elements={CytoscapeComponent.normalizeElements(data)}
+      style={{ width: "100%", height: "100%" }}
+      userZoomingEnabled={false}
+      zoom={currentZoomLevel}
+      stylesheet={style}
+    />
+  );
 }
 
 export default Cytoscape;
-
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  background: #fafafa;
-`;

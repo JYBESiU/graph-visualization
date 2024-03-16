@@ -4,7 +4,8 @@
     "style": {
       "selection-box-color": "#AAD8FF",
       "selection-box-border-color": "#8BB0D0",
-      "selection-box-opacity": "0.5"
+      "selection-box-opacity": "0.5",
+      "background-color": "#ff0000"
     }
   },
   {

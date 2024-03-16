@@ -1,4 +1,5 @@
 import { SWRConfig } from "swr";
+import { RecoilRoot } from "recoil";
 import type { AppProps } from "next/app";
 
 import "@/styles/globals.css";
@@ -9,8 +10,10 @@ export default function App({
   pageProps,
 }: AppProps) {
   return (
-    <SWRConfig value={{ fetcher: customFetcher }}>
-      <Component {...pageProps} />
-    </SWRConfig>
+    <RecoilRoot>
+      <SWRConfig value={{ fetcher: customFetcher }}>
+        <Component {...pageProps} />
+      </SWRConfig>
+    </RecoilRoot>
   );
 }

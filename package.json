@@ -12,10 +12,14 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "axios": "^1.6.7",
+    "cosmos-over-cytoscape": "^1.0.3",
     "cytoscape": "^3.28.1",
     "next": "14.1.3",
     "react": "^18",
+    "react-cytoscapejs": "^2.0.0",
     "react-dom": "^18",
+    "react-icons": "^5.0.1",
+    "recoil": "^0.7.7",
     "swr": "^2.2.5"
   },
   "devDependencies": {
@@ -23,7 +27,9 @@
     "@types/cytoscape": "^3.19.16",
     "@types/node": "^20",
     "@types/react": "^18",
+    "@types/react-cytoscapejs": "^1.2.5",
     "@types/react-dom": "^18",
+    "@types/recoil": "^0.0.9",
     "eslint": "^8",
     "eslint-config-next": "14.1.3",
     "typescript": "^5"
