@@ -44,8 +44,8 @@ export default ZoomControl;
 
 const Root = styled.div`
   position: absolute;
-  left: 40px;
-  bottom: 40px;
+  left: -80px;
+  bottom: 36px;
 
   display: flex;
   flex-direction: column;

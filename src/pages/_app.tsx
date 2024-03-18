@@ -1,6 +1,7 @@
 import { SWRConfig } from "swr";
 import { RecoilRoot } from "recoil";
 import type { AppProps } from "next/app";
+import { ChakraProvider } from "@chakra-ui/react";
 
 import "@/styles/globals.css";
 import { customFetcher } from "@/utils/api";
@@ -12,7 +13,9 @@ export default function App({
   return (
     <RecoilRoot>
       <SWRConfig value={{ fetcher: customFetcher }}>
-        <Component {...pageProps} />
+        <ChakraProvider>
+          <Component {...pageProps} />
+        </ChakraProvider>
       </SWRConfig>
     </RecoilRoot>
   );
