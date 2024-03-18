@@ -9,3 +9,8 @@ export const currentZoomLavelState = atom<number>({
   key: "currentZoomLavelState",
   default: 0,
 });
+
+export const scaleFactorState = atom<string>({
+  key: "scaleFactorState",
+  default: "1",
+});

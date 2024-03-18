@@ -10,7 +10,7 @@ function SideBar({}: SideBarProps) {
     <Box
       h={"100%"}
       w={260}
-      p={"32px"}
+      p={"24px"}
       borderLeftRadius={4}
       bg={color.gray100}
     >
