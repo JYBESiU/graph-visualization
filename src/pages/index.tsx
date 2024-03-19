@@ -10,11 +10,11 @@ const Cytoscape = dynamic(
 );
 
 export default function Home() {
-  const { graphs, isLoading } = useGraphAll();
+  const { elements, isLoading } = useGraphAll();
 
   return (
     <Flex w={"100%"} h={"100vh"}>
-      {!isLoading && <Cytoscape data={graphs} />}
+      {!isLoading && <Cytoscape elements={elements} />}
       <Box flexShrink={0} pos={"relative"} h={"100%"}>
         <SideBar />
         <ZoomControl />

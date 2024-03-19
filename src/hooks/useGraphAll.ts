@@ -12,10 +12,10 @@ export function useGraphAll() {
     `/graph-all?sf=${sf}`
   );
 
-  const graphs = useMemo(() => {
+  const elements = useMemo(() => {
     if (data === undefined) return [];
     return data;
   }, [data]);
 
-  return { graphs, isLoading };
+  return { elements, isLoading };
 }
