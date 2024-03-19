@@ -1,5 +1,10 @@
 import dynamic from "next/dynamic";
-import { Box, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  Spinner,
+} from "@chakra-ui/react";
 
 import { SideBar, ZoomControl } from "@/components";
 import { useGraphAll, useNodeByLabel } from "@/hooks";
@@ -14,8 +19,14 @@ export default function Home() {
 
   return (
     <Flex w={"100%"} h={"100vh"}>
-      {!isLoading && <Cytoscape elements={elements} />}
-      <Box flexShrink={0} pos={"relative"} h={"100%"}>
+      {isLoading ? (
+        <Center w={"100%"} h={"100%"}>
+          <Spinner size={"xl"} />
+        </Center>
+      ) : (
+        <Cytoscape elements={elements} />
+      )}
+      <Box pos={"relative"} h={"100%"}>
         <SideBar />
         <ZoomControl />
       </Box>
