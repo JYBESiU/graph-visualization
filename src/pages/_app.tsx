@@ -1,10 +1,13 @@
 import { SWRConfig } from "swr";
-import { RecoilRoot } from "recoil";
+import { RecoilRoot, RecoilEnv } from "recoil";
 import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 
 import "@/styles/globals.css";
 import { customFetcher } from "@/utils/api";
+
+RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED =
+  false;
 
 export default function App({
   Component,

@@ -4,44 +4,20 @@
     "style": {
       "selection-box-color": "#AAD8FF",
       "selection-box-border-color": "#8BB0D0",
-      "selection-box-opacity": "0.5",
-      "background-color": "#ff0000"
+      "selection-box-opacity": "0.5"
     }
   },
   {
     "selector": "node",
     "style": {
-      "content": "data(name)",
-      "font-size": "12px",
-      "text-valign": "center",
-      "text-halign": "center",
       "background-color": "#555",
-      "text-outline-color": "#555",
-      "text-outline-width": "2px",
+      "opacity": "0.4",
       "color": "#fff",
       "overlay-padding": "6px",
       "z-index": "10"
     }
   },
-  {
-    "selector": "node[?attr]",
-    "style": {
-      "shape": "rectangle",
-      "background-color": "#aaa",
-      "text-outline-color": "#aaa",
-      "width": "16px",
-      "height": "16px",
-      "font-size": "6px",
-      "z-index": "1"
-    }
-  },
-  {
-    "selector": "node[?query]",
-    "style": {
-      "background-clip": "none",
-      "background-fit": "contain"
-    }
-  },
+
   {
     "selector": "node:selected",
     "style": {
@@ -56,10 +32,10 @@
     "selector": "edge",
     "style": {
       "curve-style": "haystack",
-      "haystack-radius": "0.5",
+      "haystack-radius": "0.1",
       "opacity": "0.4",
-      "line-color": "#bbb",
-      "width": "mapData(weight, 0, 1, 1, 8)",
+      "line-color": "#Fbb",
+
       "overlay-padding": "3px"
     }
   },
@@ -95,12 +71,6 @@
     "selector": "edge.filtered",
     "style": {
       "opacity": "0"
-    }
-  },
-  {
-    "selector": "edge[group=\"coexp\"]",
-    "style": {
-      "line-color": "#d0b7d5"
     }
   }
 ]

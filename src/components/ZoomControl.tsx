@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import {
-  defaultZoomLavelState,
-  currentZoomLavelState,
+  defaultZoomLevelState,
+  currentZoomLevelState,
 } from "@/utils/recoil";
 import { color } from "@/utils/color";
 import { FaMinus, FaPlus } from "react-icons/fa6";
@@ -12,11 +12,11 @@ export interface ZoomControlProps {}
 
 function ZoomControl({}: ZoomControlProps) {
   const defaultZoomLevel = useRecoilValue(
-    defaultZoomLavelState
+    defaultZoomLevelState
   );
-  const zoomGap = defaultZoomLevel * 0.3;
+  const zoomGap = defaultZoomLevel * 0.4;
   const setCurrentZoomLevel = useSetRecoilState(
-    currentZoomLavelState
+    currentZoomLevelState
   );
 
   const handleZoomIn = () => {

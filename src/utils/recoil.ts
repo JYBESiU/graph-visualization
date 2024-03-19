@@ -1,12 +1,12 @@
 import { atom } from "recoil";
 
-export const defaultZoomLavelState = atom<number>({
-  key: "defaultZoomLavelState",
+export const defaultZoomLevelState = atom<number>({
+  key: "defaultZoomLevelState",
   default: 0,
 });
 
-export const currentZoomLavelState = atom<number>({
-  key: "currentZoomLavelState",
+export const currentZoomLevelState = atom<number>({
+  key: "currentZoomLevelState",
   default: 0,
 });
 

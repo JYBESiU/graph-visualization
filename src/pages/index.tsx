@@ -1,7 +1,9 @@
-import useSWR from "swr";
 import dynamic from "next/dynamic";
-import styled from "@emotion/styled";
-import ZoomControl from "@/components/ZoomControl";
+import { Box, Flex } from "@chakra-ui/react";
+
+import data from "@/utils/data.json";
+import { SideBar, ZoomControl } from "@/components";
+import { useNodeByLabel } from "@/hooks";
 
 const Cytoscape = dynamic(
   () => import("@/components/Cytoscape"),
@@ -9,19 +11,15 @@ const Cytoscape = dynamic(
 );
 
 export default function Home() {
-  const { data, isLoading } = useSWR("/hello");
+  const { nodes } = useNodeByLabel();
 
   return (
-    <Root>
-      <Cytoscape />
-      <ZoomControl />
-    </Root>
+    <Flex w={"100%"} h={"100vh"}>
+      <Cytoscape data={nodes} />
+      <Box flexShrink={0} pos={"relative"} h={"100%"}>
+        <SideBar />
+        <ZoomControl />
+      </Box>
+    </Flex>
   );
 }
-
-const Root = styled.div`
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
-`;
