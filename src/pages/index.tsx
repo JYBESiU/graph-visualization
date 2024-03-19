@@ -1,9 +1,8 @@
 import dynamic from "next/dynamic";
 import { Box, Flex } from "@chakra-ui/react";
 
-import data from "@/utils/data.json";
 import { SideBar, ZoomControl } from "@/components";
-import { useNodeByLabel } from "@/hooks";
+import { useGraphAll, useNodeByLabel } from "@/hooks";
 
 const Cytoscape = dynamic(
   () => import("@/components/Cytoscape"),
@@ -11,11 +10,11 @@ const Cytoscape = dynamic(
 );
 
 export default function Home() {
-  const { nodes } = useNodeByLabel();
+  const { graphs, isLoading } = useGraphAll();
 
   return (
     <Flex w={"100%"} h={"100vh"}>
-      <Cytoscape data={nodes} />
+      {!isLoading && <Cytoscape data={graphs} />}
       <Box flexShrink={0} pos={"relative"} h={"100%"}>
         <SideBar />
         <ZoomControl />

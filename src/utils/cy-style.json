@@ -10,14 +10,13 @@
   {
     "selector": "node",
     "style": {
-      "background-color": "#555",
+      "background-color": "data(bg)",
       "opacity": "0.4",
       "color": "#fff",
       "overlay-padding": "6px",
       "z-index": "10"
     }
   },
-
   {
     "selector": "node:selected",
     "style": {
@@ -33,9 +32,8 @@
     "style": {
       "curve-style": "haystack",
       "haystack-radius": "0.1",
-      "opacity": "0.4",
-      "line-color": "#Fbb",
-
+      "opacity": "0.5",
+      "line-color": "#ddd",
       "overlay-padding": "3px"
     }
   },

@@ -32,6 +32,7 @@ function Cytoscape({ data }: CytoscapeProps) {
       const cy = cytoscape({
         container: document.getElementById("cy"),
         elements: data,
+        // @ts-ignore
         style,
         layout: { name: "preset" },
       });

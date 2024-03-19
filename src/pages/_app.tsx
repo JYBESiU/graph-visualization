@@ -15,7 +15,12 @@ export default function App({
 }: AppProps) {
   return (
     <RecoilRoot>
-      <SWRConfig value={{ fetcher: customFetcher }}>
+      <SWRConfig
+        value={{
+          revalidateOnFocus: false,
+          fetcher: customFetcher,
+        }}
+      >
         <ChakraProvider>
           <Component {...pageProps} />
         </ChakraProvider>
