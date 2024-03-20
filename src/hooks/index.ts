@@ -1,3 +1,3 @@
 export * from "./useGraphAll";
-export * from "./useNodeByLabel";
+export * from "./useGraphByLabel";
 export * from "./useNodeTypes";

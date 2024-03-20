@@ -1,6 +1,9 @@
 import { useEffect, useRef } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import cytoscape, { ElementDefinition } from "cytoscape";
+import cytoscape, {
+  Core,
+  ElementDefinition,
+} from "cytoscape";
 
 import style from "@/utils/cy-style.json";
 import {
@@ -11,14 +14,25 @@ import { Box } from "@chakra-ui/react";
 
 export interface CytoscapeProps {
   elements: ElementDefinition[];
+  partialElements: ElementDefinition[] | null;
 }
 
-function Cytoscape({ elements }: CytoscapeProps) {
-  const cyRef = useRef<cytoscape.Core>();
+function Cytoscape({
+  elements,
+  partialElements,
+}: CytoscapeProps) {
+  const cyRef = useRef<Core>();
   const [defaultZoomLevel, setDefaultZoomLevel] =
     useRecoilState(defaultZoomLevelState);
   const [currentZoomLevel, setCurrentZoomLevel] =
     useRecoilState(currentZoomLevelState);
+
+  const resetFocus = (cy?: Core) => {
+    cy?.center();
+    cy?.fit(undefined, 10);
+    setDefaultZoomLevel(cy?.zoom() || 0);
+    setCurrentZoomLevel(cy?.zoom() || 0);
+  };
 
   useEffect(() => {
     if (elements?.length > 0) {
@@ -32,14 +46,18 @@ function Cytoscape({ elements }: CytoscapeProps) {
         },
       });
 
-      cy.center();
-      cy.fit(undefined, 10);
-      setDefaultZoomLevel(cy.zoom());
-      setCurrentZoomLevel(cy.zoom());
+      resetFocus(cy);
 
       cyRef.current = cy;
     }
   }, [elements]);
+
+  useEffect(() => {
+    if (partialElements && partialElements.length > 0) {
+      cyRef.current?.json({ elements: partialElements });
+      resetFocus(cyRef.current);
+    }
+  }, [partialElements]);
 
   useEffect(() => {
     cyRef.current?.zoom(currentZoomLevel);

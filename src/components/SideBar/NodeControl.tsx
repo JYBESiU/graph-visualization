@@ -1,11 +1,25 @@
-import { Box, Flex, Spinner, Text } from "@chakra-ui/react";
+import { useRecoilState } from "recoil";
+import { Box, Spinner, Text } from "@chakra-ui/react";
 
+import NodeChip from "./NodeChip";
 import { useNodeTypes } from "@/hooks";
+import { NodeLabel } from "@/utils/types";
+import { selectedNodeLabelsState } from "@/utils/recoil";
 
 export interface NodeControlProps {}
 
 function NodeControl({}: NodeControlProps) {
   const { nodeTypes, isLoading } = useNodeTypes();
+  const [selectedNodeLabels, setSelectedNodeLabels] =
+    useRecoilState(selectedNodeLabelsState);
+
+  const handleNodeClick = (label: NodeLabel) => () => {
+    setSelectedNodeLabels((prev) => {
+      if (prev.includes(label))
+        return prev.filter((l) => l !== label);
+      else return [...prev, label];
+    });
+  };
 
   return (
     <Box>
@@ -17,9 +31,13 @@ function NodeControl({}: NodeControlProps) {
       ) : (
         nodeTypes.map((nodeType) => (
           <NodeChip
-            key={nodeType.name}
-            name={nodeType.name}
+            key={nodeType.label}
+            label={nodeType.label}
             color={nodeType.color}
+            selected={selectedNodeLabels.includes(
+              nodeType.label
+            )}
+            onClick={handleNodeClick(nodeType.label)}
           />
         ))
       )}
@@ -28,28 +46,3 @@ function NodeControl({}: NodeControlProps) {
 }
 
 export default NodeControl;
-
-const NodeChip = ({
-  name,
-  color,
-}: {
-  name: string;
-  color: string;
-}) => {
-  return (
-    <Flex
-      w={"200px"}
-      h={"32px"}
-      align={"center"}
-      px={"24px"}
-      bg={color}
-      borderRadius={"18px"}
-      mb={"8px"}
-      cursor={"pointer"}
-    >
-      <Text fontSize={"14px"} fontWeight={600}>
-        {name}
-      </Text>
-    </Flex>
-  );
-};

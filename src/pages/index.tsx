@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 
 import { SideBar, ZoomControl } from "@/components";
-import { useGraphAll, useNodeByLabel } from "@/hooks";
+import { useGraphAll, useGraphByLabel } from "@/hooks";
 
 const Cytoscape = dynamic(
   () => import("@/components/Cytoscape"),
@@ -16,6 +16,8 @@ const Cytoscape = dynamic(
 
 export default function Home() {
   const { elements, isLoading } = useGraphAll();
+  const { partialElements, isLoading: ld } =
+    useGraphByLabel();
 
   return (
     <Flex w={"100%"} h={"100vh"}>
@@ -24,7 +26,10 @@ export default function Home() {
           <Spinner size={"xl"} />
         </Center>
       ) : (
-        <Cytoscape elements={elements} />
+        <Cytoscape
+          elements={elements}
+          partialElements={partialElements}
+        />
       )}
       <Box pos={"relative"} h={"100%"}>
         <SideBar />
