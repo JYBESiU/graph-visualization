@@ -1,8 +1,9 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 import { color } from "@/utils/color";
 import ScaleControl from "./ScaleControl";
 import NodeControl from "./NodeControl";
+import ViewControl from "./ViewControl";
 
 export interface SideBarProps {
   graphLoading: boolean;
@@ -19,6 +20,7 @@ function SideBar({ graphLoading }: SideBarProps) {
       borderLeftRadius={4}
       bg={color.gray100}
     >
+      <ViewControl />
       <ScaleControl />
       <NodeControl graphLoading={graphLoading} />
     </Flex>

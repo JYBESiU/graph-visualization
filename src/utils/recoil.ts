@@ -20,3 +20,8 @@ export const selectedNodeLabelsState = atom<NodeLabel[]>({
   key: "selectedNodeLabelsState",
   default: Object.values(NodeLabel),
 });
+
+export const viewState = atom<string>({
+  key: "viewState",
+  default: "graph",
+});
