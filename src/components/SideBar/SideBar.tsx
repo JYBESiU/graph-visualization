@@ -4,9 +4,11 @@ import { color } from "@/utils/color";
 import ScaleControl from "./ScaleControl";
 import NodeControl from "./NodeControl";
 
-export interface SideBarProps {}
+export interface SideBarProps {
+  graphLoading: boolean;
+}
 
-function SideBar({}: SideBarProps) {
+function SideBar({ graphLoading }: SideBarProps) {
   return (
     <Flex
       h={"100%"}
@@ -18,7 +20,7 @@ function SideBar({}: SideBarProps) {
       bg={color.gray100}
     >
       <ScaleControl />
-      <NodeControl />
+      <NodeControl graphLoading={graphLoading} />
     </Flex>
   );
 }

@@ -6,14 +6,18 @@ import { useNodeTypes } from "@/hooks";
 import { NodeLabel } from "@/utils/types";
 import { selectedNodeLabelsState } from "@/utils/recoil";
 
-export interface NodeControlProps {}
+export interface NodeControlProps {
+  graphLoading: boolean;
+}
 
-function NodeControl({}: NodeControlProps) {
+function NodeControl({ graphLoading }: NodeControlProps) {
   const { nodeTypes, isLoading } = useNodeTypes();
   const [selectedNodeLabels, setSelectedNodeLabels] =
     useRecoilState(selectedNodeLabelsState);
 
   const handleNodeClick = (label: NodeLabel) => () => {
+    if (graphLoading) return;
+
     setSelectedNodeLabels((prev) => {
       if (prev.includes(label))
         return prev.filter((l) => l !== label);
@@ -37,6 +41,9 @@ function NodeControl({}: NodeControlProps) {
             selected={selectedNodeLabels.includes(
               nodeType.label
             )}
+            cursor={
+              graphLoading ? "not-allowed" : "pointer"
+            }
             onClick={handleNodeClick(nodeType.label)}
           />
         ))

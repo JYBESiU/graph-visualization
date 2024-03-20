@@ -21,7 +21,6 @@ function NodeChip({
       bg={color}
       borderRadius={"18px"}
       mb={"8px"}
-      cursor={"pointer"}
       opacity={selected ? 1 : 0.2}
       {...rest}
     >
