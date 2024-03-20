@@ -15,24 +15,30 @@ const Cytoscape = dynamic(
 );
 
 export default function Home() {
-  const { elements, isLoading } = useGraphAll();
-  const { partialElements, isLoading: ld } =
-    useGraphByLabel();
+  // const { elements, isLoading } = useGraphAll();
+  const { elements, isLoading } = useGraphByLabel();
 
   return (
     <Flex w={"100%"} h={"100vh"}>
-      {isLoading ? (
-        <Center w={"100%"} h={"100%"}>
-          <Spinner size={"xl"} />
-        </Center>
-      ) : (
-        <Cytoscape
-          elements={elements}
-          partialElements={partialElements}
-        />
-      )}
+      <Box w={"100%"} h={"100%"} pos={"relative"}>
+        {isLoading && (
+          <Center
+            pos={"absolute"}
+            top={0}
+            left={0}
+            w={"100%"}
+            h={"100%"}
+            bg={"#00000029"}
+            zIndex={100}
+          >
+            <Spinner size={"xl"} />
+          </Center>
+        )}
+        <Cytoscape elements={elements} />
+      </Box>
+
       <Box pos={"relative"} h={"100%"}>
-        <SideBar />
+        <SideBar graphLoading={isLoading} />
         <ZoomControl />
       </Box>
     </Flex>
