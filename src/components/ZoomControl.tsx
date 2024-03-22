@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BiReset } from "react-icons/bi";
+import { RxEnterFullScreen } from "react-icons/rx";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { Box, Center, Flex } from "@chakra-ui/react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -54,7 +54,7 @@ function ZoomControl({}: ZoomControlProps) {
         }
         onClick={handleZoomReset}
       >
-        <BiReset size={"20px"} />
+        <RxEnterFullScreen size={"20px"} />
       </Center>
 
       <Flex

@@ -25,7 +25,7 @@ function Cytoscape({ elements }: CytoscapeProps) {
 
   const resetFocus = (cy?: Core) => {
     cy?.center();
-    cy?.fit(undefined, 10);
+    cy?.fit(undefined, 20);
     setDefaultZoomLevel(cy?.zoom() || 0);
     setCurrentZoomLevel(cy?.zoom() || 0);
   };
