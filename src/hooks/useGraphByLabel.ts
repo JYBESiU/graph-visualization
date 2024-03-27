@@ -16,7 +16,7 @@ export function useGraphByLabel() {
   );
 
   const { data, isLoading } = useSWR<ElementDefinition[]>(
-    `/graph?${qs.stringify({
+    `/graph/node-sample?${qs.stringify({
       sf,
       labels: selectedNodeLabels,
     })}`
