@@ -1,35 +1,46 @@
-import { Box } from "@chakra-ui/react";
 import ReactFlow, {
   Controls,
   Background,
   useNodesState,
   useEdgesState,
-  addEdge,
 } from "reactflow";
 import "reactflow/dist/style.css";
+import { Box } from "@chakra-ui/react";
+import { useRecoilValue } from "recoil";
+import { useEffect } from "react";
 
-const initialNodes = [
-  {
-    id: "1",
-    position: { x: 0, y: 0 },
-    data: { label: "1" },
-  },
-  {
-    id: "2",
-    position: { x: 0, y: 100 },
-    data: { label: "2" },
-  },
-];
-const initialEdges = [
-  { id: "e1-2", source: "1", target: "2" },
-];
+import { useEdgesByNodes } from "@/hooks";
+import { selectedNodeLabelSchemaState } from "@/utils/recoil";
 
 export interface TableViewProps {}
 
 function TableView({}: TableViewProps) {
+  const initialNodes = useRecoilValue(
+    selectedNodeLabelSchemaState
+  );
+  const { edges: initialEdges } = useEdgesByNodes();
+
+  const [nodes, setNodes, onNodesChange] =
+    useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] =
+    useEdgesState(initialEdges);
+
+  useEffect(() => {
+    if (initialEdges.length > 0) {
+      setEdges(initialEdges);
+    }
+  }, [setEdges, initialEdges]);
+
   return (
     <Box w={"100%"} h={"100%"}>
-      <ReactFlow nodes={initialNodes} edges={initialEdges}>
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        fitView
+      >
+        <Background />
         <Controls />
       </ReactFlow>
     </Box>
