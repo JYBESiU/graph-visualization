@@ -22,13 +22,13 @@ function SelfConnectEdge(props: EdgeProps) {
     label,
   } = props;
 
-  const radiusX = 80;
-  const radiusY = 40;
+  const radiusX = 120;
+  const radiusY = 50;
   const edgePath = `M ${sourceX} ${sourceY} 
     A ${radiusX} ${radiusY}
     0 1 0 ${targetX} ${targetY}`;
 
-  const labelX = sourceX + radiusX * 1.9;
+  const labelX = sourceX + radiusX * 1.5;
   const labelY = (sourceY + targetY) / 2;
 
   return (

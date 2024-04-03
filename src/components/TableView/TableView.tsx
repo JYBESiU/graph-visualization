@@ -13,11 +13,16 @@ import { useEffect } from "react";
 
 import { useTableSchema } from "@/hooks";
 import SelfConnectEdge from "./SelfConnectEdge";
+import CustomNode from "./CustomNode";
 
 export interface TableViewProps {}
 
 const edgeTypes = {
   selfConnect: SelfConnectEdge,
+};
+
+const nodeTypes = {
+  custom: CustomNode,
 };
 
 function TableView({}: TableViewProps) {
@@ -59,6 +64,7 @@ function TableView({}: TableViewProps) {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         edgeTypes={edgeTypes}
+        nodeTypes={nodeTypes}
         fitView
       >
         <Background />
