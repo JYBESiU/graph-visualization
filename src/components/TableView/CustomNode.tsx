@@ -44,12 +44,17 @@ function CustomNode({ id, data, selected }: NodeProps) {
           bg={"white"}
           w={"100%"}
           overflowY={"scroll"}
-          maxHeight={"300px"}
+          maxHeight={"250px"}
         >
           {isLoading ? (
             <Spinner />
           ) : (
-            <DataTable data={nodeData} />
+            <DataTable
+              data={nodeData}
+              loadMore={loadMore}
+              isReachingEnd={isReachingEnd}
+              isLoadingMore={isLoading}
+            />
           )}
         </Box>
       </Box>

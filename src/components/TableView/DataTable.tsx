@@ -10,12 +10,21 @@ import {
 } from "@chakra-ui/react";
 
 import { NodeData } from "@/utils/types";
+import InfiniteLoading from "../InfiniteLoading";
 
 export interface DataTableProps {
   data: NodeData[];
+  loadMore?: () => void;
+  isLoadingMore?: boolean;
+  isReachingEnd?: boolean;
 }
 
-function DataTable({ data }: DataTableProps) {
+function DataTable({
+  data,
+  loadMore,
+  isLoadingMore,
+  isReachingEnd,
+}: DataTableProps) {
   const columns = Object.keys(data[0]);
 
   return (
@@ -38,6 +47,11 @@ function DataTable({ data }: DataTableProps) {
               ))}
             </Tr>
           ))}
+          <InfiniteLoading
+            loadMore={loadMore}
+            isReachingEnd={isReachingEnd}
+            isLoadingMore={isLoadingMore}
+          />
         </Tbody>
       </Table>
     </TableContainer>
