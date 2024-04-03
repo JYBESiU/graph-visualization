@@ -13,9 +13,13 @@ import DataTable from "./DataTable";
 function CustomNode({ id, data, selected }: NodeProps) {
   const { label, bg } = data;
 
-  const { nodeData, isLoading } = useNodeData(
-    id as NodeLabel
-  );
+  const {
+    nodeData,
+    isEmpty,
+    isLoading,
+    isReachingEnd,
+    loadMore,
+  } = useNodeData(id as NodeLabel);
 
   return (
     <div className="nowheel">
