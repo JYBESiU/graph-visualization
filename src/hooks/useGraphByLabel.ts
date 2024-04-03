@@ -7,19 +7,23 @@ import { ElementDefinition } from "cytoscape";
 import {
   scaleFactorState,
   selectedNodeLabelsState,
+  viewState,
 } from "@/utils/recoil";
 
 export function useGraphByLabel() {
+  const view = useRecoilValue(viewState);
   const sf = useRecoilValue(scaleFactorState);
   const selectedNodeLabels = useRecoilValue(
     selectedNodeLabelsState
   );
 
   const { data, isLoading } = useSWR<ElementDefinition[]>(
-    `/graph/edge-sample?${qs.stringify({
-      sf,
-      labels: selectedNodeLabels,
-    })}`
+    view === "graph"
+      ? `/graph/edge-sample?${qs.stringify({
+          sf,
+          labels: selectedNodeLabels,
+        })}`
+      : null
   );
 
   const elements = useMemo(() => {

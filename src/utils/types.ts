@@ -2,13 +2,13 @@ export enum NodeLabel {
   CITY = "city",
   COUNTRY = "country",
   CONTINENT = "continent",
-  COMPANY = "company",
   FORUM = "forum",
-  MESSAGE = "message",
   PERSON = "person",
+  MESSAGE = "message",
+  COMPANY = "company",
+  UNIVERSITY = "university",
   TAG = "tag",
   TAGCLASS = "tagclass",
-  UNIVERSITY = "university",
 }
 
 export enum EdgeLabel {}

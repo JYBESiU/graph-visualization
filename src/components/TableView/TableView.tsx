@@ -4,6 +4,7 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
   useReactFlow,
+  MarkerType,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -11,8 +12,13 @@ import { Box } from "@chakra-ui/react";
 import { useEffect } from "react";
 
 import { useTableSchema } from "@/hooks";
+import SelfConnectEdge from "./SelfConnectEdge";
 
 export interface TableViewProps {}
+
+const edgeTypes = {
+  selfConnect: SelfConnectEdge,
+};
 
 function TableView({}: TableViewProps) {
   const { fitView } = useReactFlow();
@@ -33,7 +39,14 @@ function TableView({}: TableViewProps) {
       edgeSchema.length > 0
     ) {
       setNodes(nodeSchema);
-      setEdges(edgeSchema);
+      setEdges(
+        edgeSchema.map((e) => ({
+          ...e,
+          markerEnd: {
+            type: MarkerType.ArrowClosed,
+          },
+        }))
+      );
     }
     fitView();
   }, [nodeSchema, setNodes, edgeSchema, setEdges, fitView]);
@@ -45,6 +58,7 @@ function TableView({}: TableViewProps) {
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
+        edgeTypes={edgeTypes}
         fitView
       >
         <Background />
