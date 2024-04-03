@@ -14,6 +14,7 @@ import {
 } from "@/components";
 import { useGraphByLabel } from "@/hooks";
 import { viewState } from "@/utils/recoil";
+import { ReactFlowProvider } from "reactflow";
 
 const Cytoscape = dynamic(
   () => import("@/components/Cytoscape"),
@@ -44,7 +45,9 @@ export default function Home() {
         {view === "graph" ? (
           <Cytoscape elements={elements} />
         ) : (
-          <TableView />
+          <ReactFlowProvider>
+            <TableView />
+          </ReactFlowProvider>
         )}
       </Box>
 

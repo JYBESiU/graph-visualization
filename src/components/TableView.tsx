@@ -3,33 +3,40 @@ import ReactFlow, {
   Background,
   useNodesState,
   useEdgesState,
+  useReactFlow,
 } from "reactflow";
 import "reactflow/dist/style.css";
+
 import { Box } from "@chakra-ui/react";
-import { useRecoilValue } from "recoil";
 import { useEffect } from "react";
 
-import { useEdgesByNodes } from "@/hooks";
-import { selectedNodeLabelSchemaState } from "@/utils/recoil";
+import { useTableSchema } from "@/hooks";
 
 export interface TableViewProps {}
 
 function TableView({}: TableViewProps) {
-  const initialNodes = useRecoilValue(
-    selectedNodeLabelSchemaState
-  );
-  const { edges: initialEdges } = useEdgesByNodes();
+  const { fitView } = useReactFlow();
+  const { nodeSchema, edgeSchema } = useTableSchema();
 
-  const [nodes, setNodes, onNodesChange] =
-    useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] =
-    useEdgesState(initialEdges);
+  const [nodes, setNodes, onNodesChange] = useNodesState(
+    []
+  );
+  const [edges, setEdges, onEdgesChange] = useEdgesState(
+    []
+  );
 
   useEffect(() => {
-    if (initialEdges.length > 0) {
-      setEdges(initialEdges);
+    if (
+      nodeSchema &&
+      nodeSchema.length > 0 &&
+      edgeSchema &&
+      edgeSchema.length > 0
+    ) {
+      setNodes(nodeSchema);
+      setEdges(edgeSchema);
     }
-  }, [setEdges, initialEdges]);
+    fitView();
+  }, [nodeSchema, setNodes, edgeSchema, setEdges, fitView]);
 
   return (
     <Box w={"100%"} h={"100%"}>

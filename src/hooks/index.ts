@@ -3,4 +3,4 @@ export * from "./useGraphByLabel";
 export * from "./useGraphByLabelClient";
 export * from "./useGraphImageByLabel";
 export * from "./useNodeTypes";
-export * from "./useEdgesByNodes";
+export * from "./useTableSchema";
