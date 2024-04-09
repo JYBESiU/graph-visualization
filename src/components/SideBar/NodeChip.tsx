@@ -14,17 +14,16 @@ function NodeChip({
 }: NodeChipProps) {
   return (
     <Flex
-      w={"200px"}
-      h={"32px"}
-      align={"center"}
-      px={"24px"}
+      w={"100%"}
+      h={"30px"}
       bg={color}
+      align={"center"}
+      justify={"center"}
       borderRadius={"18px"}
-      mb={"8px"}
       opacity={selected ? 1 : 0.2}
       {...rest}
     >
-      <Text fontSize={"14px"} fontWeight={600}>
+      <Text fontSize={"12px"} fontWeight={600}>
         {label.toUpperCase()}
       </Text>
     </Flex>
