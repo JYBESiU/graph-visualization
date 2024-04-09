@@ -1,17 +1,17 @@
 import { Flex, FlexProps, Text } from "@chakra-ui/react";
 
-export interface NodeChipProps extends FlexProps {
+export interface ChipProps extends FlexProps {
   label: string;
   color: string;
   selected: boolean;
 }
 
-function NodeChip({
+function Chip({
   label,
   color,
   selected,
   ...rest
-}: NodeChipProps) {
+}: ChipProps) {
   return (
     <Flex
       w={"100%"}
@@ -23,11 +23,11 @@ function NodeChip({
       opacity={selected ? 1 : 0.2}
       {...rest}
     >
-      <Text fontSize={"12px"} fontWeight={600}>
+      <Text fontSize={"11px"} fontWeight={600}>
         {label.toUpperCase()}
       </Text>
     </Flex>
   );
 }
 
-export default NodeChip;
+export default Chip;

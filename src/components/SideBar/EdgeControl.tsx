@@ -10,30 +10,30 @@ import {
 import { useState } from "react";
 
 import Chip from "./Chip";
-import { useNodeTypes } from "@/hooks";
-import { NodeLabel } from "@/utils/types";
-import { selectedNodeLabelsState } from "@/utils/recoil";
+import { useEdgeTypes } from "@/hooks";
+import { EdgeLabel } from "@/utils/types";
+import { selectedEdgeLabelsState } from "@/utils/recoil";
 
-export interface NodeControlProps {
+export interface EdgeControlProps {
   graphLoading: boolean;
 }
 
-function NodeControl({ graphLoading }: NodeControlProps) {
+function EdgeControl({ graphLoading }: EdgeControlProps) {
   const [isEditing, setIsEditing] = useState(false);
 
-  const { nodeTypes, isLoading } = useNodeTypes();
-  const [selectedNodeLabels, setSelectedNodeLabels] =
-    useRecoilState(selectedNodeLabelsState);
-  const [tempNodeLabels, setTempNodeLabels] = useState(
-    selectedNodeLabels
+  const { edgeTypes, isLoading } = useEdgeTypes();
+  const [selectedEdgeLabels, setSelectedEdgeLabels] =
+    useRecoilState(selectedEdgeLabelsState);
+  const [tempEdgeLabels, setTempEdgeLabels] = useState(
+    selectedEdgeLabels
   );
 
   const notEditable = graphLoading || !isEditing;
 
-  const handleNodeClick = (label: NodeLabel) => () => {
+  const handleEdgeClick = (label: EdgeLabel) => () => {
     if (notEditable) return;
 
-    setTempNodeLabels((prev) => {
+    setTempEdgeLabels((prev) => {
       if (prev.includes(label))
         return prev.filter((l) => l !== label);
       else return [...prev, label];
@@ -42,7 +42,7 @@ function NodeControl({ graphLoading }: NodeControlProps) {
 
   const handleEditClick = () => {
     if (isEditing) {
-      setSelectedNodeLabels(tempNodeLabels);
+      setSelectedEdgeLabels(tempEdgeLabels);
     }
     setIsEditing((prev) => !prev);
   };
@@ -55,7 +55,7 @@ function NodeControl({ graphLoading }: NodeControlProps) {
         justify={"space-between"}
       >
         <Text fontSize={"18px"} fontWeight={500}>
-          Nodes
+          Edges
         </Text>
         <Button
           key={String(isEditing)}
@@ -69,28 +69,25 @@ function NodeControl({ graphLoading }: NodeControlProps) {
       {isLoading ? (
         <Spinner />
       ) : (
-        <Grid
-          templateColumns={"repeat(2, 1fr)"}
-          gap={"8px"}
-        >
-          {nodeTypes.map((nodeType) => (
+        <Flex direction={"column"} gap={"4px"}>
+          {edgeTypes.map((edgeType) => (
             <Chip
-              key={nodeType.label}
-              label={nodeType.label}
-              color={nodeType.color}
-              selected={tempNodeLabels.includes(
-                nodeType.label
+              key={edgeType.label}
+              label={edgeType.label}
+              color={edgeType.color}
+              selected={tempEdgeLabels.includes(
+                edgeType.label
               )}
               cursor={
                 notEditable ? "not-allowed" : "pointer"
               }
-              onClick={handleNodeClick(nodeType.label)}
+              onClick={handleEdgeClick(edgeType.label)}
             />
           ))}
-        </Grid>
+        </Flex>
       )}
     </Box>
   );
 }
 
-export default NodeControl;
+export default EdgeControl;

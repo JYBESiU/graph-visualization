@@ -4,6 +4,7 @@ import { color } from "@/utils/color";
 import ScaleControl from "./ScaleControl";
 import NodeControl from "./NodeControl";
 import ViewControl from "./ViewControl";
+import EdgeControl from "./EdgeControl";
 
 export interface SideBarProps {
   graphLoading: boolean;
@@ -19,10 +20,12 @@ function SideBar({ graphLoading }: SideBarProps) {
       gap={"24px"}
       borderLeftRadius={4}
       bg={color.gray100}
+      overflow={"auto"}
     >
       <ViewControl />
       <ScaleControl />
       <NodeControl graphLoading={graphLoading} />
+      <EdgeControl graphLoading={graphLoading} />
     </Flex>
   );
 }

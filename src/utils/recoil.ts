@@ -1,7 +1,6 @@
-import { atom, selector } from "recoil";
-import { Node } from "reactflow";
+import { atom } from "recoil";
 
-import { NodeLabel } from "./types";
+import { EdgeLabel, NodeLabel } from "./types";
 
 export const defaultZoomLevelState = atom<number>({
   key: "defaultZoomLevel",
@@ -21,6 +20,11 @@ export const scaleFactorState = atom<string>({
 export const selectedNodeLabelsState = atom<NodeLabel[]>({
   key: "selectedNodeLabels",
   default: Object.values(NodeLabel),
+});
+
+export const selectedEdgeLabelsState = atom<EdgeLabel[]>({
+  key: "selectedEdgeLabels",
+  default: Object.values(EdgeLabel),
 });
 
 export const viewState = atom<string>({
