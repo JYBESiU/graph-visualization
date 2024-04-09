@@ -15,7 +15,7 @@ export function useTableSchema() {
     edgeSchema: Edge[];
   }>(
     `/table-schema?${stringify({
-      labels: selectedNodeLabels,
+      nodeLabels: selectedNodeLabels,
     })}`
   );
 

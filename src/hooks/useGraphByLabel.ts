@@ -21,7 +21,7 @@ export function useGraphByLabel() {
     view === "graph"
       ? `/graph/edge-sample?${qs.stringify({
           sf,
-          labels: selectedNodeLabels,
+          nodeLabels: selectedNodeLabels,
         })}`
       : null
   );

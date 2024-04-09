@@ -8,7 +8,7 @@ import { NodeData, NodeLabel } from "@/utils/types";
 import { scaleFactorState } from "@/utils/recoil";
 
 const getKey =
-  (query: { sf: string; label: NodeLabel }) =>
+  (query: { sf: string; nodeLabels: NodeLabel }) =>
   (page: number, previousPageData: any) => {
     if (previousPageData && !previousPageData.result.length)
       return null;
@@ -20,13 +20,15 @@ const getKey =
     })}`;
   };
 
-export function useNodeData(label: NodeLabel) {
+export function useNodeData(nodeLabels: NodeLabel) {
   const sf = useRecoilValue(scaleFactorState);
 
   const { data, setSize, ...rest } = useSWRInfinite<{
     result: NodeData[];
     count: number;
-  }>(getKey({ sf, label }), { revalidateFirstPage: false });
+  }>(getKey({ sf, nodeLabels }), {
+    revalidateFirstPage: false,
+  });
 
   const list = useMemo(
     () => data?.flatMap((d) => d.result) || [],

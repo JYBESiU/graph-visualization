@@ -7,12 +7,12 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react";
+import { useState } from "react";
 
 import NodeChip from "./NodeChip";
 import { useNodeTypes } from "@/hooks";
 import { NodeLabel } from "@/utils/types";
 import { selectedNodeLabelsState } from "@/utils/recoil";
-import { useState } from "react";
 
 export interface NodeControlProps {
   graphLoading: boolean;

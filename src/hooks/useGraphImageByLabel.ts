@@ -18,7 +18,7 @@ export function useGraphImageByLabel() {
   const { data, isLoading } = useSWR<{ imgUrl: string }>(
     `/graph/image?${qs.stringify({
       sf,
-      labels: selectedNodeLabels,
+      nodeLabels: selectedNodeLabels,
     })}`
   );
 

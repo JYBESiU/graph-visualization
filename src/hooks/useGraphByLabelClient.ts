@@ -21,7 +21,7 @@ export function useGraphByLabelClient() {
   }>(
     `/graph/client?${qs.stringify({
       sf,
-      labels: selectedNodeLabels,
+      nodeLabels: selectedNodeLabels,
     })}`
   );
 
