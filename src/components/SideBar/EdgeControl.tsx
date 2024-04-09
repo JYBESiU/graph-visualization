@@ -1,18 +1,13 @@
-import { useRecoilState } from "recoil";
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Spinner,
-  Text,
-} from "@chakra-ui/react";
-import { useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 import Chip from "./Chip";
-import { useEdgeTypes } from "@/hooks";
 import { EdgeLabel } from "@/utils/types";
-import { selectedEdgeLabelsState } from "@/utils/recoil";
+import {
+  edgeTypesState,
+  selectedEdgeLabelsState,
+} from "@/utils/recoil";
 
 export interface EdgeControlProps {
   graphLoading: boolean;
@@ -21,12 +16,16 @@ export interface EdgeControlProps {
 function EdgeControl({ graphLoading }: EdgeControlProps) {
   const [isEditing, setIsEditing] = useState(false);
 
-  const { edgeTypes, isLoading } = useEdgeTypes();
+  const edgeTypes = useRecoilValue(edgeTypesState);
   const [selectedEdgeLabels, setSelectedEdgeLabels] =
     useRecoilState(selectedEdgeLabelsState);
   const [tempEdgeLabels, setTempEdgeLabels] = useState(
     selectedEdgeLabels
   );
+
+  useEffect(() => {
+    setTempEdgeLabels(selectedEdgeLabels);
+  }, [selectedEdgeLabels]);
 
   const notEditable = graphLoading || !isEditing;
 
@@ -66,26 +65,21 @@ function EdgeControl({ graphLoading }: EdgeControlProps) {
           {isEditing ? "Set" : "Edit"}
         </Button>
       </Flex>
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <Flex direction={"column"} gap={"4px"}>
-          {edgeTypes.map((edgeType) => (
-            <Chip
-              key={edgeType.label}
-              label={edgeType.label}
-              color={edgeType.color}
-              selected={tempEdgeLabels.includes(
-                edgeType.label
-              )}
-              cursor={
-                notEditable ? "not-allowed" : "pointer"
-              }
-              onClick={handleEdgeClick(edgeType.label)}
-            />
-          ))}
-        </Flex>
-      )}
+
+      <Flex direction={"column"} gap={"4px"}>
+        {edgeTypes.map((edgeType) => (
+          <Chip
+            key={edgeType.label}
+            label={edgeType.label}
+            color={edgeType.color}
+            selected={tempEdgeLabels.includes(
+              edgeType.label
+            )}
+            cursor={notEditable ? "not-allowed" : "pointer"}
+            onClick={handleEdgeClick(edgeType.label)}
+          />
+        ))}
+      </Flex>
     </Box>
   );
 }

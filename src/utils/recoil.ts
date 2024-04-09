@@ -1,6 +1,8 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
 
 import { EdgeLabel, NodeLabel } from "./types";
+import { getEdgeLablesByNodeLabels } from "./labels";
+import { edgeColors } from "./color";
 
 export const defaultZoomLevelState = atom<number>({
   key: "defaultZoomLevel",
@@ -25,6 +27,27 @@ export const selectedNodeLabelsState = atom<NodeLabel[]>({
 export const selectedEdgeLabelsState = atom<EdgeLabel[]>({
   key: "selectedEdgeLabels",
   default: Object.values(EdgeLabel),
+});
+
+export const edgeTypesState = selector<
+  {
+    label: EdgeLabel;
+    color: string;
+  }[]
+>({
+  key: "edgeTypes",
+  get: ({ get }) => {
+    const nodeLabels = get(selectedNodeLabelsState);
+
+    const edgeLabels =
+      getEdgeLablesByNodeLabels(nodeLabels);
+    const edgeTypes = edgeLabels.map((label) => ({
+      label,
+      color: edgeColors[label],
+    }));
+
+    return edgeTypes;
+  },
 });
 
 export const viewState = atom<string>({

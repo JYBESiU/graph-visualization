@@ -6,15 +6,18 @@ import {
 } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { useRecoilValue } from "recoil";
+import { ReactFlowProvider } from "reactflow";
 
 import {
   SideBar,
   ZoomControl,
   TableView,
 } from "@/components";
-import { useGraphByLabel } from "@/hooks";
 import { viewState } from "@/utils/recoil";
-import { ReactFlowProvider } from "reactflow";
+import {
+  useGraphByLabel,
+  useGraphEdgeSampling,
+} from "@/hooks";
 
 const Cytoscape = dynamic(
   () => import("@/components/Cytoscape"),
@@ -22,6 +25,7 @@ const Cytoscape = dynamic(
 );
 
 export default function Home() {
+  // const { elements, isLoading } = useGraphEdgeSampling();
   const { elements, isLoading } = useGraphByLabel();
   const view = useRecoilValue(viewState);
 

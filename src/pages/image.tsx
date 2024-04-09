@@ -13,10 +13,7 @@ import {
   ZoomControl,
   TableView,
 } from "@/components";
-import {
-  useGraphByLabel,
-  useGraphImageByLabel,
-} from "@/hooks";
+import { useGraphImageByLabel } from "@/hooks";
 import { viewState } from "@/utils/recoil";
 
 const Cytoscape = dynamic(

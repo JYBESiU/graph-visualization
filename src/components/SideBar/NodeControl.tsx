@@ -1,4 +1,4 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   Box,
   Button,
@@ -10,9 +10,13 @@ import {
 import { useState } from "react";
 
 import Chip from "./Chip";
-import { useNodeTypes } from "@/hooks";
 import { NodeLabel } from "@/utils/types";
-import { selectedNodeLabelsState } from "@/utils/recoil";
+import {
+  selectedEdgeLabelsState,
+  selectedNodeLabelsState,
+} from "@/utils/recoil";
+import { nodeColors } from "@/utils/color";
+import { getEdgeLablesByNodeLabels } from "@/utils/labels";
 
 export interface NodeControlProps {
   graphLoading: boolean;
@@ -21,11 +25,13 @@ export interface NodeControlProps {
 function NodeControl({ graphLoading }: NodeControlProps) {
   const [isEditing, setIsEditing] = useState(false);
 
-  const { nodeTypes, isLoading } = useNodeTypes();
   const [selectedNodeLabels, setSelectedNodeLabels] =
     useRecoilState(selectedNodeLabelsState);
   const [tempNodeLabels, setTempNodeLabels] = useState(
     selectedNodeLabels
+  );
+  const setSelectedEdgeLabels = useSetRecoilState(
+    selectedEdgeLabelsState
   );
 
   const notEditable = graphLoading || !isEditing;
@@ -43,6 +49,9 @@ function NodeControl({ graphLoading }: NodeControlProps) {
   const handleEditClick = () => {
     if (isEditing) {
       setSelectedNodeLabels(tempNodeLabels);
+      setSelectedEdgeLabels(
+        getEdgeLablesByNodeLabels(tempNodeLabels)
+      );
     }
     setIsEditing((prev) => !prev);
   };
@@ -66,31 +75,30 @@ function NodeControl({ graphLoading }: NodeControlProps) {
           {isEditing ? "Set" : "Edit"}
         </Button>
       </Flex>
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <Grid
-          templateColumns={"repeat(2, 1fr)"}
-          gap={"8px"}
-        >
-          {nodeTypes.map((nodeType) => (
-            <Chip
-              key={nodeType.label}
-              label={nodeType.label}
-              color={nodeType.color}
-              selected={tempNodeLabels.includes(
-                nodeType.label
-              )}
-              cursor={
-                notEditable ? "not-allowed" : "pointer"
-              }
-              onClick={handleNodeClick(nodeType.label)}
-            />
-          ))}
-        </Grid>
-      )}
+
+      <Grid templateColumns={"repeat(2, 1fr)"} gap={"8px"}>
+        {nodeTypes.map((nodeType) => (
+          <Chip
+            key={nodeType.label}
+            label={nodeType.label}
+            color={nodeType.color}
+            selected={tempNodeLabels.includes(
+              nodeType.label
+            )}
+            cursor={notEditable ? "not-allowed" : "pointer"}
+            onClick={handleNodeClick(nodeType.label)}
+          />
+        ))}
+      </Grid>
     </Box>
   );
 }
 
 export default NodeControl;
+
+const nodeTypes = Object.entries(NodeLabel).map(
+  ([_, value]) => ({
+    label: value,
+    color: nodeColors[value],
+  })
+);
