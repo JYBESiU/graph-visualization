@@ -15,7 +15,7 @@ export const currentZoomLevelState = atom<number>({
 
 export const scaleFactorState = atom<string>({
   key: "scaleFactor",
-  default: "1",
+  default: "0.1",
 });
 
 export const selectedNodeLabelsState = atom<NodeLabel[]>({

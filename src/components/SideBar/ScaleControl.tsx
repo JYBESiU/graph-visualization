@@ -23,6 +23,7 @@ function ScaleControl({}: ScaleControlProps) {
       </Text>
       <RadioGroup onChange={setScale} value={scale}>
         <Flex direction={"column"} gap={"4px"}>
+          <Radio value="0.1">XSmall</Radio>
           <Radio value="1">Small</Radio>
           <Radio value="10">Medium</Radio>
           <Radio value="100">Large</Radio>

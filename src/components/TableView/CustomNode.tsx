@@ -31,7 +31,7 @@ function CustomNode({ id, data, selected }: NodeProps) {
         maxW={"400px"}
       >
         <Text
-          fontSize={"12px"}
+          fontSize={"14px"}
           px={"8px"}
           py={"4px"}
           fontWeight={600}
