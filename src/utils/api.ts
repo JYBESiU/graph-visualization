@@ -1,7 +1,8 @@
 import axios, { AxiosError } from "axios";
 
 const api = axios.create({
-  baseURL: "http://143.248.140.127:3001",
+  // baseURL: "http://143.248.140.127:3001",
+  baseURL: "http://localhost:3001",
 });
 
 export async function customFetcher(url: string) {

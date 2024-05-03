@@ -24,9 +24,9 @@ const Cytoscape = dynamic(
   { ssr: false }
 );
 
-export default function Home() {
-  // const { elements, isLoading } = useGraphEdgeSampling();
-  const { elements, isLoading } = useGraphByLabel();
+export default function Sampling() {
+  const { elements, isLoading } = useGraphEdgeSampling();
+  // const { elements, isLoading } = useGraphByLabel();
   const view = useRecoilValue(viewState);
 
   return (
