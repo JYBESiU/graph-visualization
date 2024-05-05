@@ -2,15 +2,13 @@ import { Flex } from "@chakra-ui/react";
 
 import { color } from "@/utils/color";
 import ScaleControl from "../ScaleControl";
-import NodeControl from "./NodeControl";
 import ViewControl from "../ViewControl";
-import EdgeControl from "./EdgeControl";
 
-export interface SideBarProps {
+export interface QuerySideBarProps {
   graphLoading: boolean;
 }
 
-function SideBar({ graphLoading }: SideBarProps) {
+function QuerySideBar({ graphLoading }: QuerySideBarProps) {
   return (
     <Flex
       h={"100%"}
@@ -24,10 +22,8 @@ function SideBar({ graphLoading }: SideBarProps) {
     >
       <ViewControl />
       <ScaleControl />
-      <NodeControl graphLoading={graphLoading} />
-      <EdgeControl graphLoading={graphLoading} />
     </Flex>
   );
 }
 
-export default SideBar;
+export default QuerySideBar;
