@@ -19,6 +19,11 @@ export const scaleFactorState = atom<string>({
   default: "0.1",
 });
 
+export const preDefinedQueryState = atom<string>({
+  key: "preDefinedQuery",
+  default: "",
+});
+
 export const selectedNodeLabelsState = atom<NodeLabel[]>({
   key: "selectedNodeLabels",
   default: Object.values(NodeLabel),

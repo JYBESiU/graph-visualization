@@ -6,3 +6,6 @@ export * from "./ZoomControl";
 
 export { default as TableView } from "./TableView";
 export * from "./TableView";
+
+export { default as QuerySideBar } from "./QuerySideBar";
+export * from "./QuerySideBar";

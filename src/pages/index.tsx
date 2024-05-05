@@ -14,7 +14,7 @@ import {
   TableView,
 } from "@/components";
 import { viewState } from "@/utils/recoil";
-import { useKnowsQuery } from "@/hooks";
+import { usePreDefinedQuery } from "@/hooks";
 
 const Cytoscape = dynamic(
   () => import("@/components/Cytoscape"),
@@ -22,7 +22,7 @@ const Cytoscape = dynamic(
 );
 
 export default function Home() {
-  const { elements, isLoading } = useKnowsQuery();
+  const { elements, isLoading } = usePreDefinedQuery();
 
   const view = useRecoilValue(viewState);
 

@@ -3,6 +3,7 @@ import { Flex } from "@chakra-ui/react";
 import { color } from "@/utils/color";
 import ScaleControl from "../ScaleControl";
 import ViewControl from "../ViewControl";
+import QueryControl from "./QueryControl";
 
 export interface QuerySideBarProps {
   graphLoading: boolean;
@@ -22,6 +23,7 @@ function QuerySideBar({ graphLoading }: QuerySideBarProps) {
     >
       <ViewControl />
       <ScaleControl />
+      <QueryControl />
     </Flex>
   );
 }
