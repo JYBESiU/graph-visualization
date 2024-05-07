@@ -8,12 +8,12 @@ import dynamic from "next/dynamic";
 import { useRecoilValue } from "recoil";
 
 import {
-  SideBar,
   ZoomControl,
   TableView,
+  QuerySideBar,
 } from "@/components";
 import { viewState } from "@/utils/recoil";
-import { useGraphByLabelClient } from "@/hooks";
+import { usePreDefinedQueryClient } from "@/hooks";
 
 const CytoscapeClient = dynamic(
   () => import("@/components/CytoscapeClient"),
@@ -21,8 +21,9 @@ const CytoscapeClient = dynamic(
 );
 
 export default function Client() {
-  const { elements, clusters, isLoading } =
-    useGraphByLabelClient();
+  const { elements, isLoading } =
+    usePreDefinedQueryClient();
+
   const view = useRecoilValue(viewState);
 
   return (
@@ -43,17 +44,14 @@ export default function Client() {
         )}
 
         {view === "graph" ? (
-          <CytoscapeClient
-            elements={elements}
-            clusters={clusters}
-          />
+          <CytoscapeClient elements={elements} />
         ) : (
           <TableView />
         )}
       </Box>
 
       <Box pos={"relative"} h={"100%"}>
-        <SideBar graphLoading={isLoading} />
+        <QuerySideBar graphLoading={isLoading} />
         {view === "graph" && <ZoomControl />}
       </Box>
     </Flex>
