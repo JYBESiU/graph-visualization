@@ -8,9 +8,12 @@ import { NodeData, NodeLabel } from "@/utils/types";
 import { scaleFactorState } from "@/utils/recoil";
 
 const getKey =
-  (query: { sf: string; nodeLabels: NodeLabel }) =>
+  (query: { sf: string; nodeLabel: NodeLabel }) =>
   (page: number, previousPageData: any) => {
-    if (previousPageData && !previousPageData.result.length)
+    if (
+      query.nodeLabel === undefined ||
+      (previousPageData && !previousPageData.result.length)
+    )
       return null;
 
     return `/node-data?${qs.stringify({
@@ -20,13 +23,13 @@ const getKey =
     })}`;
   };
 
-export function useNodeData(nodeLabels: NodeLabel) {
+export function useNodeData(nodeLabel: NodeLabel) {
   const sf = useRecoilValue(scaleFactorState);
 
   const { data, setSize, ...rest } = useSWRInfinite<{
     result: NodeData[];
     count: number;
-  }>(getKey({ sf, nodeLabels }), {
+  }>(getKey({ sf, nodeLabel }), {
     revalidateFirstPage: false,
   });
 

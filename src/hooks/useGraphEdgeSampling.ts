@@ -19,7 +19,7 @@ export function useGraphEdgeSampling() {
 
   const { data, isLoading } = useSWR<ElementDefinition[]>(
     view === "graph"
-      ? `/graph/edge-sample?${qs.stringify({
+      ? `/graph/node-sample?${qs.stringify({
           sf,
           nodeLabels: selectedNodeLabels,
         })}`

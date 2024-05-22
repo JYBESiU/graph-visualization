@@ -26,12 +26,15 @@ export const preDefinedQueryState = atom<string>({
 
 export const selectedNodeLabelsState = atom<NodeLabel[]>({
   key: "selectedNodeLabels",
-  default: Object.values(NodeLabel),
+  default: [NodeLabel.PERSON, NodeLabel.UNIVERSITY],
 });
 
 export const selectedEdgeLabelsState = atom<EdgeLabel[]>({
   key: "selectedEdgeLabels",
-  default: Object.values(EdgeLabel),
+  default: [
+    EdgeLabel.PERSON_KNOWS_PERSON,
+    EdgeLabel.PERSON_STUDYAT_UNIVERSITY,
+  ],
 });
 
 export const edgeTypesState = selector<

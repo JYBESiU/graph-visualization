@@ -32,6 +32,7 @@ function TableView({}: TableViewProps) {
   const [nodes, setNodes, onNodesChange] = useNodesState(
     []
   );
+
   const [edges, setEdges, onEdgesChange] = useEdgesState(
     []
   );

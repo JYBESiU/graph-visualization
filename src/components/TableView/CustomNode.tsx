@@ -11,6 +11,7 @@ import { NodeLabel } from "@/utils/types";
 import DataTable from "./DataTable";
 
 function CustomNode({ id, data, selected }: NodeProps) {
+  console.log("id: ", id);
   const { label, bg } = data;
 
   const {

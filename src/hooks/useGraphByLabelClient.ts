@@ -6,31 +6,36 @@ import { ElementDefinition } from "cytoscape";
 
 import {
   scaleFactorState,
+  selectedEdgeLabelsState,
   selectedNodeLabelsState,
 } from "@/utils/recoil";
 
 export function useGraphByLabelClient() {
   const sf = useRecoilValue(scaleFactorState);
+
   const selectedNodeLabels = useRecoilValue(
     selectedNodeLabelsState
   );
+  const selectedEdgeLabels = useRecoilValue(
+    selectedEdgeLabelsState
+  );
 
-  const { data, isLoading } = useSWR<{
-    elements: ElementDefinition[];
-    clusters: string[][];
-  }>(
+  const { data, isLoading } = useSWR<ElementDefinition[]>(
     `/graph/client?${qs.stringify({
       sf,
       nodeLabels: selectedNodeLabels,
+      edgeLabels: selectedEdgeLabels,
     })}`
   );
-
-  const elements = data?.elements || [];
-  const clusters = data?.clusters || [];
+  const elements = useMemo(() => {
+    if (data === undefined)
+      return [] as ElementDefinition[];
+    return data;
+  }, [data]);
 
   return {
     elements,
-    clusters,
+
     isLoading,
   };
 }

@@ -5,6 +5,10 @@ import cytoscape, {
   CoseLayoutOptions,
   ElementDefinition,
 } from "cytoscape";
+// @ts-ignore
+import fcose from "cytoscape-fcose";
+// @ts-ignore
+import cola from "cytoscape-cola";
 
 import style from "@/utils/cy-style.json";
 import {
@@ -15,6 +19,8 @@ import {
 } from "@/utils/recoil";
 import { Box } from "@chakra-ui/react";
 
+cytoscape.use(fcose);
+cytoscape.use(cola);
 export interface CytoscapeProps {
   elements: ElementDefinition[];
 }
@@ -48,11 +54,15 @@ function CytoscapeClient({ elements }: CytoscapeProps) {
 
   useEffect(() => {
     if (elements && elements.length > 0) {
+      // console.log(v8.getHeapStatistics());
+
       console.time("time by console");
       const startTime = performance.now();
 
       cyRef.current?.json({ elements });
-      cyRef.current?.layout(coseLayout).run();
+      cyRef.current?.layout(colaLayout).run();
+
+      // console.log(v8.getHeapStatistics());
 
       console.timeEnd("time by console");
       const endTime = performance.now();
@@ -84,6 +94,22 @@ const coseLayout: CoseLayoutOptions = {
   animate: false,
   randomize: true,
   componentSpacing: 100,
-  nodeRepulsion: (node) => 100 * Math.pow(node.degree(), 3),
+  // nodeRepulsion: (node) => 100 * Math.pow(node.degree(), 3),
+  nodeRepulsion: (node) => 1000000,
   idealEdgeLength: (edge) => 64,
+};
+
+const fcoseLayout = {
+  name: "fcose",
+  animate: false,
+  nodeSeparation: 100,
+  nodeRepulsion: (node: any) =>
+    100 * Math.pow(node.degree(), 3),
+  idealEdgeLength: (edge: any) => 64,
+};
+
+const colaLayout = {
+  name: "cola",
+  animate: false,
+  maxSimulationTime: 1000000,
 };
