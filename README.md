@@ -1,40 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 대규모 그래프 관계형 데이터베이스에서의 그래프 시각화 시스템
+본 연구는 KAIST 학사 학위 논문 연구로, 대규모 그래프 관계형 데이터베이스에서의 그래프 시각화 시스템에 대한 연구입니다.
 
-## Getting Started
+해당 저장소는 시각화 시스템의 클라이언트 부분을 구현합니다.([서버 저장소](https://github.com/JYBESiU/graph-express))
 
-First, run the development server:
+## 연구 개요
+> Graph Visualization System in Large-scale Graph Relational DBMS
+> 
+> 지도 교수: 김민수, 논문: [pdf](https://drive.google.com/file/d/1uwf2GIxe_LDNc43sto_0x5H--X73RPFk/view?usp=drive_link)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+> 현대의 데이터베이스 시스템은 점점 복잡해지는 데이터 관계를 효과적으로 분석하기 위해 그래프
+관계형 데이터베이스(GRDBMS)의 도입을 필요로 하고 있다. 그러나 데이터 분석에서 중요한 대규모
+그래프 데이터를 시각화 하는 데 있어 기존 방법들은 가시성 저하와 연산 비용 증가 등의 한계를
+보였다. 본 연구는 이러한 문제를 해결하기 위해 세 가지 주요 접근법을 제안한다.
+> 
+> 첫째, 패턴 매칭 기반 부분 그래프 시각화를 도입하여 불필요한 데이터를 제거하고 항상 연결된 부분
+그래프를 추출할 수 있게 한다. 둘째, 분리 제약 레이아웃을 도입하여 그래프 시각화 과정에서
+정점 간의 최소 간격을 강제함으로써 겹침 문제를 해결하고, 시각화 결과의 가시성을 높인다.
+셋째, 서버 중심 처리 시스템을 구축하여 그래프 쿼리와 레이아웃 계산을 서버 측에서
+처리함으로써 클라이언트 측의 연산 부담을 줄이고, 시각화 성능을 향상시킨다.
+>
+> 실험 결과, 제안된 방법은 기존의 클라이언트 중심 처리 시스템에 비해 그래프의 가시성과 연산 효율성에서
+우수함을 확인하였다. 이 연구는 대규모 데이터에서의 효과적인 시각화와 신속한 분석이 가능함을
+입증하며, 그래프 관계형 데이터 베이스에서의 그래프 시각화에 새로운 방향을 제시한다.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 연구 환경
+### 시각화 라이브러리
+- [Cytoscape.js](https://js.cytoscape.org/)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+**선정 이유**
+- JSON 형식의 Data input/output 가능
+- 다양한 layout 함수 존재
+- Node.js 환경에서 사용 가능하여 서버 측에서 데이터 분석 가능
+  
+### 데이터셋
+- [LDBC Social Network Benchmark](https://ldbcouncil.org/benchmarks/snb/) SF 0.1
+- 노드 개수: 7908, 엣지 개수: 29355
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 연구 과정
+### 샘플링 기법
+**초기 가설**: 모든 노드와 엣지를 시각화한 후 패턴을 파악한다.
+- 브라우저의 렌더링에 한계가 있어 모든 노드와 엣지를 시각화 할 수 없다.
+- 따라서 특정 노드와 엣지만 선택할 수 있는 인터페이스를 통해 파악하고자 하는 데이터 수를 줄인다.
+- 그럼에도 불구하고, SF(Scale Factor) 1일 경우 데이터 수가 많아서 렌더링 할 수 없다.
+- SF 0.1이더라도 데이터 수가 많고 중첩되어 패턴을 파악할 수 없다.
+<img width="800" alt="스크린샷 2024-04-11 오후 5 56 55" src="https://github.com/user-attachments/assets/4f6ecb2d-e925-44b5-85e5-a553bebd893e">
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- 따라서 샘플링 기법을 사용하여 그래프의 크기를 줄인다.
+<img width="800" alt="스크린샷 2024-04-10 오전 2 32 28" src="https://github.com/user-attachments/assets/42f6ba98-fcef-4c6c-9d70-74cdaed5aeb4">
 
-## Learn More
+**한계**: 랜덤 노드 샘플링, 랜덤 엣지 샘플링 등의 기법은 전체 그래프에서의 패턴을 잃어버린다.
+- 기존 엣지가 끊기거나 열결되지 않은 그래프가 생길 수 있다.
+- 따라서 그래프 시각화의 목적에 적합하지 않다.
 
-To learn more about Next.js, take a look at the following resources:
+### 패턴 매칭 질의
+- neo4j bloom과 같은 다른 그래프 분석 툴에서는 패턴 매칭 기반의 데이터 질의를 수행한다.
+<img width="800" alt="스크린샷 2024-05-03 오후 10 52 40" src="https://github.com/user-attachments/assets/b6cdf2e6-6346-40ea-96de-86e4204e494b">
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**결론**: 의미 있는 질의를 통해 항상 연결된 서브그래프를 추출하자.
+- 미리 정의된 질의를 요청할 수 있는 인터페이스로 변경하여 시각화할 수 있다.
+<img width="800" alt="스크린샷 2024-05-12 오후 6 05 52" src="https://github.com/user-attachments/assets/6c01a120-b9a2-4f3e-9d10-1f362ea1aa48">
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+
+
+
